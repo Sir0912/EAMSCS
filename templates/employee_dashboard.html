@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+
+</head>
+<body>
+     <table>
+        <tr>
+            <th>Name</th>
+            <th>Time In</th>
+            <th>Time Out</th>
+        </tr>
+        {% for i in ma %}
+        <tr>
+            <td>{{ i['name'] }}</td>
+            <td>{{ i['time_in'] }}</td>
+            <td>{{ i['time_out'] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    
+</body>
+</html>

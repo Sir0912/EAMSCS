@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salary Monitoring</title>
+</head>
+<body>
+    <h1>Salary Monitoring</h1>
+
+    <!-- Links -->
+    <a href="{{ url_for('admin_log') }}">Monitoring Attendance</a>
+    <a href="{{ url_for('sal_admin') }}">Go to Salary Monitor</a>
+    <a href="{{ url_for('list_admin') }}">Employee</a>
+    <a href="{{ url_for('add')}}">[HAM]</a>
+
+    <table border="1" cellpadding="5" cellspacing="0">
+        <tr>
+            <th>Name</th>
+            <th>Duration</th>
+            <th>Salary (Pesos)</th>
+        </tr>
+
+        {% for i in sm %}
+        <tr>
+            <td>{{ i['name'] }}</td>
+            <td id="duration-{{ i['id'] }}">
+                {% if i['time_out'] %}
+                    {% set hours = i['duration'] // 60 %}
+                    {% set minutes = i['duration'] % 60 %}
+                    {{ hours }}h {{ minutes }}m
+                {% else %}
+                    0h 0m
+                {% endif %}
+            </td>
+            <td id="salary-{{ i['id'] }}">
+                {{ i['salary'] if i['salary'] else 0 }}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <br>
+    <a href="{{ url_for('landing_page') }}">Sign out</a>
+
+    <!-- Socket.IO for real-time update -->
+    <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+    <script>
+        var socket = io();
+
+        // Listen for live updates
+        socket.on("attendance_update", function(data) {
+            console.log("Update received:", data);
+
+            // Update duration and salary if the row exists
+            var durationEl = document.getElementById("duration-" + data.id);
+            var salaryEl = document.getElementById("salary-" + data.id);
+
+            if(durationEl && salaryEl) {
+                // Calculate hours and minutes
+                var hours = Math.floor(data.duration / 60);
+                var minutes = data.duration % 60;
+
+                durationEl.innerText = hours + "h " + minutes + "m";
+                salaryEl.innerText = data.salary;
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>ADDING & DROPPING</h1>
+    <a href="{{ url_for('admin_log') }}">HOME</a>
+    <form action="/add" method="post">
+    
+        <input type="text" id="name_inp" name="name_inp" placeholder="Name">
+        <br>
+        <input type="text" id="age_inp" name="age_inp" placeholder="Age">
+        <br>
+        <input type="text" id="sex_inp" name="sex_inp" placeholder="sex">
+        <br>
+        <input type="text" id="email_inp" name="email_inp" placeholder="Email">
+        <br>
+        <input type="text" id="num_inp" name="num_inp" placeholder="Number">
+        <br>
+        <input type="text" id="rfid_inp" name="rfid_inp" placeholder="RFID">
+        <input type="submit" value="add">
+        <br>
+
+     <table border="1" cellpadding="5" cellspacing="0">
+        <tr>
+            <th>Profile</th>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Gender</th>
+            <th>Email</th>
+            <th>rfid</th>
+
+
+        </tr>
+        {% for i in e %}
+        <tr>
+            <td>{{i['image']}}</td>
+            <td>{{i['name']}}</td>
+            <td>{{i['age']}}</td>
+            <td>{{i['sex']}}</td>
+            <td>{{i['email']}}</td>
+            <td>{{i['rfid']}}</td>
+            <td>
+                <form action="/drop_con" method="post">
+                    <input type="hidden" name="em" value="{{ i['id_employee']}}">
+                    <button name="act_btn" value="upd_btn">Update</button>
+                    <button name="act_btn" value="del_btn">DROP</button>
+
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    
+</body>
+</html>

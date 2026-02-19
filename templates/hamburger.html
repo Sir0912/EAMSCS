@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Hamburger Menu</title>
+</head>
+<body>
+
+    <!-- Hamburger Button -->
+    <button id="hamburgerBtn">☰ Menu</button>
+
+    <!-- Menu -->
+    <div id="menu" style="display: none;">
+        <ul>
+            <li><a href="#" id="about">About</a></li>
+            <li><a href="#" id="add">Add/drop</a></li>
+        </ul>
+    </div>
+
+    <script>
+        const btn = document.getElementById("hamburgerBtn");
+        const menu = document.getElementById("menu");
+
+        btn.addEventListener("click", () => {
+            if (menu.style.display === "none") {
+                menu.style.display = "block";
+            } else {
+                menu.style.display = "none";
+            }
+        });
+    </script>
+
+</body>
+</html>
